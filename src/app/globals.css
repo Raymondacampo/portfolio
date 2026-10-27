@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+:root {
+  --background: #070b16;
+  --foreground: #eef3ff;
+  --muted: #93a0bd;
+  --line: rgba(150, 176, 255, 0.22);
+  --link: #8eb6ff;
+  --lime: #d6f25c;
+  --panel: #101830;
+}
+
+@theme inline {
+  --color-background: #070b16;
+  --color-foreground: #eef3ff;
+  --color-muted: #93a0bd;
+  --color-line: rgba(150, 176, 255, 0.22);
+  --color-link: #8eb6ff;
+  --color-lime: #d6f25c;
+  --color-panel: #101830;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  pointer-events: none;
+}
+
+body::before {
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 68% 42% at 50% -8%, rgba(72, 132, 255, 0.28), transparent 58%),
+    radial-gradient(circle at 100% 8%, rgba(28, 58, 140, 0.22), transparent 36%);
+}
+
+body::after {
+  top: -12rem;
+  left: 50%;
+  z-index: 0;
+  width: 46rem;
+  height: 46rem;
+  transform: translateX(-50%);
+  border: 1px solid rgba(160, 190, 255, 0.16);
+  border-radius: 999px;
+  box-shadow:
+    0 0 0 8rem rgba(140, 170, 255, 0.035),
+    inset 0 0 80px rgba(80, 120, 220, 0.05);
+}
+
+:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+.link {
+  color: var(--link);
+  text-decoration-line: underline;
+  text-decoration-color: color-mix(in srgb, var(--link) 45%, transparent);
+  text-underline-offset: 0.2em;
+}
+
+.link:hover {
+  text-decoration-color: var(--link);
+}
+
+.nav-link {
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--link);
+  text-decoration-line: underline;
+  text-underline-offset: 0.2em;
+}
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: linear-gradient(180deg, rgba(26, 38, 74, 0.96), rgba(12, 18, 38, 0.96));
+  box-shadow: 0 0 48px rgba(40, 80, 180, 0.16);
+}
+
+.panel-hover {
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.panel-hover:hover {
+  border-color: rgba(186, 208, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px rgba(48, 96, 200, 0.22);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-hover {
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .panel-hover:hover {
+    transform: none;
+  }
+}
+
+.placeholder-grid {
+  background-color: #0c1428;
+  background-image:
+    linear-gradient(rgba(150, 176, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150, 176, 255, 0.08) 1px, transparent 1px),
+    radial-gradient(circle at 50% 45%, rgba(90, 140, 255, 0.16), transparent 42%);
+  background-size: 28px 28px, 28px 28px, 100% 100%;
+}
