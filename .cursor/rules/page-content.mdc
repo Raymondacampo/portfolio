@@ -1,0 +1,26 @@
+---
+description: Cómo se alimenta la página única del portfolio
+globs: src/app/page.tsx,src/content/**/*.ts,src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Contenido de la página
+
+Una sola ruta, `src/app/page.tsx`. Secciones con ancla: `top`, `projects`, `stack`, `about`, `contact`. El header en `src/components/site-header.tsx` observa esas mismas ids.
+
+- Un proyecto nuevo es un objeto en `site.projects`: `name`, `summary`, `stack`, y si existen `image`, `liveUrl`, `repoUrl`.
+- La imagen va en `public/` y la ruta en `image` (por ejemplo `/projects/nombre.jpg`). Sin imagen, la página muestra `.placeholder-grid`.
+- El primer proyecto lleva `priority` en `next/image`. Mantén `sizes="(min-width: 768px) 736px, 100vw"` y `aspect-[16/9]`.
+- Grupos de stack: `{ group, items }` en `site.stack`. El nombre de cada item debe existir en `stackIcons` si debe verse el icono.
+- Metadata del layout usa `site.name`, `site.role` y `site.headline`. Cámbialos en `site.ts`, no en `layout.tsx`.
+- Cada sección conserva `scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)]` para que el header fijo no tape el título.
+
+```ts
+{
+  name: "Project name",
+  summary: "What it does and the part you played.",
+  stack: ["Next.js", "Tailwind CSS"],
+  image: "/projects/project-name.jpg",
+  liveUrl: "https://example.com/",
+}
+```

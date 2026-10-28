@@ -1,0 +1,23 @@
+---
+description: Stack y estructura del portfolio Next.js
+alwaysApply: true
+---
+
+# Stack del portfolio
+
+Next.js 16.4 (App Router), React 19, TypeScript strict y Tailwind CSS 4. Alias `@/*` → `src/*`.
+
+- Lee `node_modules/next/dist/docs/` antes de usar APIs de Next.js. No asumas el comportamiento de Next.js 13–15.
+- Deja el bloque `<!-- BEGIN:nextjs-agent-rules -->` de `AGENTS.md` como está. `next dev` lo restaura si se elimina.
+- Componentes de servidor por defecto. `"use client"` solo con estado o efectos del navegador, como en `src/components/site-header.tsx`.
+- Copia, proyectos y contacto van en `src/content/site.ts`. `src/app/page.tsx` renderiza `site`; no dupliques ese texto en componentes.
+- Iconos de tecnologías salen de `simple-icons` a través de `src/content/icons.ts`.
+- Enlaces externos: `target="_blank"` y `rel="noopener noreferrer"`.
+
+```tsx
+import { site } from "@/content/site";
+
+export default function Home() {
+  return <h1>{site.name}</h1>;
+}
+```
