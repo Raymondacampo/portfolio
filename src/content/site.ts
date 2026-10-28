@@ -19,7 +19,7 @@ export const site = {
   email: "raymondacampodev@gmail.com",
   githubUrl: "https://github.com/Raymondacampo",
   about: [
-    "I discovered programming in school and was captivated by the idea of building almost anything with code, quickly turning that curiosity into a career goal. Self-taught through resources like Harvard’s CS50, I grew by treating real projects as actual products. My focus shifted from solving technical problems to designing interfaces that bring ideas to life. Today I combine a technical and business mindset to create user-focused solutions from concept to completion.",
+    "I discovered programming in school and was captivated by the idea of building almost anything with code, quickly turning that curiosity into a career goal. Self-taught through resources like Harvard's CS50, I grew by treating real projects as actual products. My focus shifted from solving technical problems to designing interfaces that bring ideas to life. Today I combine a technical and business mindset to create user-focused solutions from concept to completion.",
   ],
   projects: [
     {

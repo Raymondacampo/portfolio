@@ -1,0 +1,25 @@
+---
+description: Colores, tipo y superficies ya definidos en el portfolio
+globs: src/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# Tokens de diseño
+
+Los colores viven en `src/app/globals.css` (`:root` y `@theme`). Reutilízalos; no introduzcas hex nuevos en componentes.
+
+- Fondo `#070b16`, texto `#eef3ff`, muted `#93a0bd`, línea `rgba(150, 176, 255, 0.22)`, enlace `#8eb6ff`, lima `#d6f25c`, panel `#101830`.
+- En clases: `bg-background`, `text-foreground`, `text-muted`, `border-line`, `text-link`, `text-lime`, `bg-panel`.
+- Fuente de interfaz: Geist Sans (`font-sans`). Geist Mono existe como `font-mono` y no es la fuente del cuerpo.
+- Títulos: `font-medium tracking-tight`. Sección `text-xl`, nombre `text-4xl sm:text-5xl`.
+- Superficies: clases `.panel`, `.panel-hover`, `.link`, `.nav-link` y `.placeholder-grid`.
+- El hueco de imagen usa `#0c1428`. Si hace falta otro azul de atmósfera, añádelo como token en `globals.css` antes de usarlo en un componente.
+- Animación nueva: incluye una variante en `@media (prefers-reduced-motion: reduce)`.
+- Foco: no quites el `:focus-visible` de 2px en `--link`.
+
+```tsx
+<article className="panel panel-hover overflow-hidden">
+  <h3 className="text-lg font-medium tracking-tight">{project.name}</h3>
+  <p className="mt-3 text-sm leading-6 text-muted">{project.stack.join(", ")}</p>
+</article>
+```

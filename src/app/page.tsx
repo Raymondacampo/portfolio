@@ -2,10 +2,12 @@ import Image from "next/image";
 import { SiteHeader } from "@/components/site-header";
 import { iconFill, iconGlow, stackIcons } from "@/content/icons";
 import { site, type Project } from "@/content/site";
+import { Button } from "@/components/button";
+import { ProjectSummary } from "@/components/project-summary";
 
 function ExternalLink({ href, children }: { href: string; children: string }) {
   return (
-    <a className="link" href={href} target="_blank" rel="noopener noreferrer">
+    <a href={href} target="_blank" rel="noopener noreferrer">
       {children}
     </a>
   );
@@ -17,14 +19,14 @@ function ProjectLinks({ project }: { project: Project }) {
   }
 
   return (
-    <p className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+    <Button className="mt-3 text-black/90">
       {project.liveUrl ? (
         <ExternalLink href={project.liveUrl}>Live site</ExternalLink>
       ) : null}
       {project.repoUrl ? (
         <ExternalLink href={project.repoUrl}>Repository</ExternalLink>
       ) : null}
-    </p>
+    </Button>
   );
 }
 
@@ -56,8 +58,8 @@ export default function Home() {
       <SiteHeader name={site.name} />
 
       <main>
-        <section id="top" className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] pb-16 pt-6">
-          <h1 className="text-4xl font-medium tracking-tight sm:text-5xl">
+        <section id="top" className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] pb-8 pt-6">
+          <h1 className="text-5xl font-medium tracking-tight sm:text-6xl">
             {site.name}
           </h1>
           <p className="mt-4 text-sm text-lime">{site.role}</p>
@@ -70,7 +72,7 @@ export default function Home() {
                 {site.email}
               </a>
             </li>
-            <li>
+            <li className="link">
               <ExternalLink href={site.githubUrl}>GitHub</ExternalLink>
             </li>
           </ul>
@@ -81,7 +83,7 @@ export default function Home() {
           aria-labelledby="projects-heading"
           className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] py-12"
         >
-          <h2 id="projects-heading" className="text-xl font-medium tracking-tight">
+          <h2 id="projects-heading" className="text-2xl font-medium tracking-tight">
             Projects
           </h2>
           <div className="mt-8 space-y-8">
@@ -102,10 +104,8 @@ export default function Home() {
                   )}
                 </div>
                 <div className="px-6 py-6 sm:px-7">
-                  <h3 className="text-lg font-medium tracking-tight">{project.name}</h3>
-                  <p className="mt-3 leading-7 text-pretty text-foreground/90">
-                    {project.summary}
-                  </p>
+                  <h3 className="text-3xl font-semibold tracking-tight">{project.name}</h3>
+                  <ProjectSummary summary={project.summary} />
                   <p className="mt-3 text-sm leading-6 text-muted">
                     {project.stack.join(", ")}
                   </p>
@@ -117,7 +117,7 @@ export default function Home() {
         </section>
 
         <section id="stack" aria-labelledby="stack-heading" className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] py-12">
-          <h2 id="stack-heading" className="text-xl font-medium tracking-tight">
+          <h2 id="stack-heading" className="text-2xl font-medium tracking-tight">
             Stack
           </h2>
           <div className="panel mt-8 space-y-8 px-6 py-7 sm:px-7">
@@ -137,7 +137,7 @@ export default function Home() {
         </section>
 
         <section id="about" aria-labelledby="about-heading" className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] py-12">
-          <h2 id="about-heading" className="text-xl font-medium tracking-tight">
+          <h2 id="about-heading" className="text-2xl font-medium tracking-tight">
             About
           </h2>
           <div className="panel mt-8 space-y-5 px-6 py-7 leading-7 text-pretty sm:px-7">
@@ -150,9 +150,9 @@ export default function Home() {
         <section
           id="contact"
           aria-labelledby="contact-heading"
-          className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] py-12"
+          className="scroll-mt-[calc(var(--header-height,5.5rem)+0.5rem)] min-h-[calc(100dvh-var(--header-height,5.5rem)-0.5rem)] py-12"
         >
-          <h2 id="contact-heading" className="text-xl font-medium tracking-tight">
+          <h2 id="contact-heading" className="text-2xl font-medium tracking-tight">
             Contact
           </h2>
           <ul className="panel mt-8 space-y-3 px-6 py-7 leading-7 sm:px-7">
@@ -161,9 +161,14 @@ export default function Home() {
                 {site.email}
               </a>
             </li>
-            <li>
-              <ExternalLink href={site.githubUrl}>GitHub</ExternalLink>
+            <li className="link">
+              <ExternalLink href={site.githubUrl} >GitHub</ExternalLink>
             </li>
+            {/* <li>
+              <Button>
+                Resume
+              </Button>
+            </li> */}
           </ul>
         </section>
       </main>

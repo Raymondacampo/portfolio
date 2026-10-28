@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 
 const sections = [
   { id: "projects", label: "Projects" },
@@ -8,6 +8,38 @@ const sections = [
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ] as const;
+
+function onSectionClick(event: MouseEvent<HTMLAnchorElement>) {
+  if (
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  const id = event.currentTarget.hash.slice(1);
+  const target = document.getElementById(id);
+  if (!target) return;
+
+  event.preventDefault();
+
+  const reduceMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  target.scrollIntoView({
+    behavior: reduceMotion ? "auto" : "smooth",
+    block: "start",
+  });
+
+  const hash = `#${id}`;
+  if (window.location.hash !== hash) {
+    window.history.pushState(null, "", hash);
+  }
+}
 
 export function SiteHeader({ name }: { name: string }) {
   const headerRef = useRef<HTMLElement>(null);
@@ -17,6 +49,8 @@ export function SiteHeader({ name }: { name: string }) {
     const header = headerRef.current;
     if (!header) return;
 
+    let frame = 0;
+
     const setHeight = () => {
       document.documentElement.style.setProperty(
         "--header-height",
@@ -24,47 +58,24 @@ export function SiteHeader({ name }: { name: string }) {
       );
     };
 
-    setHeight();
-    const resizeObserver = new ResizeObserver(setHeight);
-    resizeObserver.observe(header);
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
-    let frame = 0;
-
     const update = () => {
-      const viewTop = headerRef.current?.getBoundingClientRect().bottom ?? 0;
+      const headerBottom = header.getBoundingClientRect().bottom;
+      const rootFontSize =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const line = headerBottom + 0.5 * rootFontSize;
+
       const hero = document.getElementById("top");
-      if (hero && hero.getBoundingClientRect().bottom > viewTop) {
+      if (hero && hero.getBoundingClientRect().bottom > line) {
         setActiveId(null);
         return;
       }
 
-      const atBottom =
-        window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 2;
-      const probe = viewTop + (window.innerHeight - viewTop) * 0.6;
       let current: string | null = null;
-
-      if (atBottom) {
-        for (const section of [...sections].reverse()) {
-          const element = document.getElementById(section.id);
-          if (!element) continue;
-          const rect = element.getBoundingClientRect();
-          if (rect.top < window.innerHeight && rect.bottom > viewTop) {
-            current = section.id;
-            break;
-          }
-        }
-      } else {
-        for (const section of sections) {
-          const element = document.getElementById(section.id);
-          if (!element) continue;
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= probe && rect.bottom > probe) {
-            current = section.id;
-          }
+      for (const section of sections) {
+        const element = document.getElementById(section.id);
+        if (!element) continue;
+        if (element.getBoundingClientRect().top <= line + 1) {
+          current = section.id;
         }
       }
 
@@ -76,14 +87,23 @@ export function SiteHeader({ name }: { name: string }) {
       frame = requestAnimationFrame(update);
     };
 
+    const onResize = () => {
+      setHeight();
+      onScroll();
+    };
+
+    setHeight();
     update();
+    const resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(header);
     window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(frame);
+      resizeObserver.disconnect();
       window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
@@ -93,7 +113,7 @@ export function SiteHeader({ name }: { name: string }) {
       className="fixed inset-x-0 top-0 z-50 border-b border-line bg-[#070b16]"
     >
       <div className="mx-auto flex w-full max-w-[46rem] flex-col items-start gap-3 px-6 py-4 sm:flex-row sm:items-baseline sm:justify-between">
-        <a className="nav-link text-sm" href="#top">
+        <a className="nav-link text-sm" href="#top" onClick={onSectionClick}>
           {name}
         </a>
         <nav aria-label="Sections">
@@ -110,6 +130,7 @@ export function SiteHeader({ name }: { name: string }) {
                     }
                     href={`#${section.id}`}
                     aria-current={active ? "location" : undefined}
+                    onClick={onSectionClick}
                   >
                     {section.label}
                   </a>
