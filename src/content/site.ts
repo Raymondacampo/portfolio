@@ -19,7 +19,7 @@ export const site = {
   email: "raymondacampodev@gmail.com",
   githubUrl: "https://github.com/Raymondacampo",
   about: [
-    "A useful digital product should make something clearer, simpler, or more effective. My focus is on understanding what a client needs to achieve, then turning that understanding into a functional solution.",
+    "I discovered programming in school and was captivated by the idea of building almost anything with code, quickly turning that curiosity into a career goal. Self-taught through resources like Harvard’s CS50, I grew by treating real projects as actual products. My focus shifted from solving technical problems to designing interfaces that bring ideas to life. Today I combine a technical and business mindset to create user-focused solutions from concept to completion.",
   ],
   projects: [
     {
@@ -47,11 +47,11 @@ export const site = {
       image: "/projects/cdbs.jpg",
       liveUrl: "https://www.centrodedanza.com.do/",
     },
-    {
-      name: "Third project",
-      summary: "Replace this with what the project is and the part you played.",
-      stack: ["Add technologies"],
-    },
+    // {
+    //   name: "Third project",
+    //   summary: "Replace this with what the project is and the part you played.",
+    //   stack: ["Add technologies"],
+    // },
   ] satisfies Project[],
   stack: [
     {
